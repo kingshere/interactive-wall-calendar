@@ -86,7 +86,6 @@ export default function WallCalendar() {
 
   return (
     <>
-      {/* Background Glassmorphism Layers */}
       <Box sx={{ position: 'fixed', top: -50, bottom: -50, left: -50, right: -50, backgroundImage: `url(${activeTheme.image})`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'blur(40px)', transform: 'scale(1.1)', zIndex: -2, transition: 'background-image 0.7s ease' }} />
       <Box sx={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(255, 255, 255, 0.55)', zIndex: -1 }} />
 
@@ -133,24 +132,40 @@ export default function WallCalendar() {
         {/* RIGHT PANEL */}
         <Box sx={{ width: isMobile ? '100%' : '65%', p: { xs: 3, md: 6, lg: 8 }, display: 'flex', flexDirection: 'column', backgroundColor: activeTheme.panelBg, transition: 'background-color 0.5s ease', overflow: 'hidden' }}>
           
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: { xs: 4, md: 6 } }}>
-            <Box>
-              <IconButton aria-label="Previous year" onClick={() => navigateYear(-1)} sx={{ mr: 1, bgcolor: 'white', color: activeTheme.mainColor, boxShadow: 1 }}><KeyboardDoubleArrowLeftIcon /></IconButton>
-              <IconButton aria-label="Previous month" onClick={() => navigateMonth(-1)} sx={{ bgcolor: 'white', color: activeTheme.mainColor, boxShadow: 1 }}><ChevronLeftIcon /></IconButton>
+          {/* UPDATED HEADER: Responsive Flexbox & Scaling */}
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: { xs: 4, md: 6 }, width: '100%' }}>
+            {/* Left Buttons wrapped in a flex container */}
+            <Box sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 } }}>
+              <IconButton aria-label="Previous year" onClick={() => navigateYear(-1)} sx={{ bgcolor: 'white', color: activeTheme.mainColor, boxShadow: 1, p: { xs: 0.8, sm: 1 } }}>
+                <KeyboardDoubleArrowLeftIcon fontSize={isMobile ? "small" : "medium"} />
+              </IconButton>
+              <IconButton aria-label="Previous month" onClick={() => navigateMonth(-1)} sx={{ bgcolor: 'white', color: activeTheme.mainColor, boxShadow: 1, p: { xs: 0.8, sm: 1 } }}>
+                <ChevronLeftIcon fontSize={isMobile ? "small" : "medium"} />
+              </IconButton>
             </Box>
-            <Typography variant="h4" aria-live="polite" sx={{ fontWeight: 800, color: activeTheme.mainColor, letterSpacing: -0.5, transition: 'color 0.5s ease' }}>
+
+            {/* Typography dynamically scales down on mobile to prevent squishing buttons */}
+            <Typography aria-live="polite" sx={{ fontWeight: 800, color: activeTheme.mainColor, letterSpacing: -0.5, transition: 'color 0.5s ease', fontSize: { xs: '1.25rem', sm: '1.75rem', md: '2.125rem' }, textAlign: 'center', px: 1 }}>
               {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
             </Typography>
-            <Box>
-              <IconButton aria-label="Next month" onClick={() => navigateMonth(1)} sx={{ bgcolor: 'white', color: activeTheme.mainColor, boxShadow: 1, mr: 1 }}><ChevronRightIcon /></IconButton>
-              <IconButton aria-label="Next year" onClick={() => navigateYear(1)} sx={{ bgcolor: 'white', color: activeTheme.mainColor, boxShadow: 1 }}><KeyboardDoubleArrowRightIcon /></IconButton>
+
+            {/* Right Buttons wrapped in a flex container */}
+            <Box sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 } }}>
+              <IconButton aria-label="Next month" onClick={() => navigateMonth(1)} sx={{ bgcolor: 'white', color: activeTheme.mainColor, boxShadow: 1, p: { xs: 0.8, sm: 1 } }}>
+                <ChevronRightIcon fontSize={isMobile ? "small" : "medium"} />
+              </IconButton>
+              <IconButton aria-label="Next year" onClick={() => navigateYear(1)} sx={{ bgcolor: 'white', color: activeTheme.mainColor, boxShadow: 1, p: { xs: 0.8, sm: 1 } }}>
+                <KeyboardDoubleArrowRightIcon fontSize={isMobile ? "small" : "medium"} />
+              </IconButton>
             </Box>
           </Box>
 
           <Box sx={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
             <Box sx={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', mb: 2, textAlign: 'center' }}>
               {DAYS_OF_WEEK.map((day, i) => (
-                <Typography key={day} variant="subtitle2" aria-hidden="true" sx={{ fontWeight: 800, color: i > 4 ? activeTheme.mainColor : activeTheme.textColor, opacity: i > 4 ? 1 : 0.6 }}>{day}</Typography>
+                <Typography key={day} variant="subtitle2" aria-hidden="true" sx={{ fontWeight: 800, color: i > 4 ? activeTheme.mainColor : activeTheme.textColor, opacity: i > 4 ? 1 : 0.6, fontSize: { xs: '0.7rem', sm: '0.875rem' } }}>
+                  {day}
+                </Typography>
               ))}
             </Box>
 
@@ -189,9 +204,9 @@ export default function WallCalendar() {
                           onClick={() => handleDateClick(day)}
                           onKeyDown={(e) => handleKeyDown(e, day)}
                           sx={{
-                            position: 'relative', zIndex: 1, width: { xs: 36, md: 48, lg: 56 }, height: { xs: 36, md: 48, lg: 56 },
+                            position: 'relative', zIndex: 1, width: { xs: 32, sm: 48, lg: 56 }, height: { xs: 32, sm: 48, lg: 56 },
                             display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: borderRadius,
-                            backgroundColor: bg, color: color, fontWeight: isBold ? 800 : 500, fontSize: { xs: '0.9rem', md: '1.1rem' },
+                            backgroundColor: bg, color: color, fontWeight: isBold ? 800 : 500, fontSize: { xs: '0.85rem', md: '1.1rem' },
                             cursor: 'pointer', transition: 'all 0.3s ease', boxShadow: (status === 'start' || status === 'end') ? `0 4px 12px ${activeTheme.mainColor}60` : 0,
                             '&:hover, &:focus-visible': { backgroundColor: (status === 'start' || status === 'end') ? activeTheme.mainColor : 'rgba(255,255,255,0.8)', transform: (status === 'start' || status === 'end') ? 'scale(1.1)' : 'scale(1)', borderRadius: '50%', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', outline: 'none', ring: '2px solid', ringColor: activeTheme.mainColor }
                           }}
