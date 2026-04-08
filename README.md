@@ -1,73 +1,53 @@
-# React + TypeScript + Vite
+# 🗓️ Interactive Wall Calendar Widget
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![MUI](https://img.shields.io/badge/MUI-%230081CB.svg?style=for-the-badge&logo=mui&logoColor=white)
+![Framer Motion](https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer&logoColor=blue)
 
-Currently, two official plugins are available:
+> A premium, production-ready React calendar component featuring dynamic Glassmorphism theming, fluid animations, and enterprise-grade accessibility.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**[🔴 Live Demo](https://your-live-link-here.vercel.app) | [🎥 Video Walkthrough](https://your-loom-link-here.com)**
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## ✨ Features That Stand Out
 
-## Expanding the ESLint configuration
+This project goes beyond a standard grid. It was built to demonstrate product sense and deep technical execution:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+* **🎨 Dynamic Glassmorphism:** The entire component—from the background blur to the text tinting—smoothly crossfades to match the primary color of the selected hero image.
+* **🎞️ Fluid Physics-Based Animation:** Utilizing `framer-motion` to handle complex DOM unmounting, ensuring that switching months feels like a tactile, physical interaction.
+* **♿ Enterprise Accessibility (a11y):** Fully navigable via keyboard (`Tab`, `Space`, `Enter`). Every interactive element contains strict ARIA labels, making it 100% screen-reader compliant.
+* **💾 Local Data Persistence:** Integrated notes feature that automatically debounces and syncs to `localStorage`, preserving user state across sessions.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🏗️ Architecture & Technical Decisions
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+I intentionally avoided mixing UI rendering with business logic. 
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+**The `useCalendar` Custom Hook:** All date math, matrix generation for the empty cells, and state management were extracted into a centralized hook. 
+* **Why?** This ensures strict Separation of Concerns (SoC). The UI components remain completely "dumb" and purely presentational, making the codebase highly testable and easy to maintain.
+* **Performance:** Implemented `useMemo` to cache the calendar matrix generation, ensuring the heavy date-math only re-renders when the specific month or year changes, not on every keystroke in the notes app.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+**Modern Material UI (v6):**
+Leveraged the latest `slotProps` API over deprecated prop drilling, utilizing the `sx` prop engine to eliminate the need for heavy external CSS compilation.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+---
+
+## 🚀 Quick Start
+
+Want to run this locally? It takes less than a minute.
+
+```bash
+# 1. Clone the repository
+git clone [https://github.com/kingshere/interactive-wall-calendar.git](https://github.com/kingshere/interactive-wall-calendar.git)
+
+# 2. Navigate into the directory
+cd interactive-wall-calendar
+
+# 3. Install dependencies
+npm install
+
+# 4. Start the Vite development server
+npm run dev
