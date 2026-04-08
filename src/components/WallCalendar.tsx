@@ -89,13 +89,14 @@ export default function WallCalendar() {
       <Box sx={{ position: 'fixed', top: -50, bottom: -50, left: -50, right: -50, backgroundImage: `url(${activeTheme.image})`, backgroundSize: 'cover', backgroundPosition: 'center', filter: 'blur(40px)', transform: 'scale(1.1)', zIndex: -2, transition: 'background-image 0.7s ease' }} />
       <Box sx={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(255, 255, 255, 0.55)', zIndex: -1 }} />
 
+      {/* FIX 1: Changed overflow: 'hidden' to overflowX: 'hidden' and overflowY: 'auto' so the whole card can scroll vertically on mobile */}
       <Paper 
         elevation={24} 
-        sx={{ width: '100%', maxWidth: 1200, height: '100%', maxHeight: 800, display: 'flex', flexDirection: isMobile ? 'column' : 'row', borderRadius: { xs: 0, md: 4 }, overflow: 'hidden', transition: 'background-color 0.5s ease', border: '1px solid rgba(255,255,255,0.4)' }}
+        sx={{ width: '100%', maxWidth: 1200, height: '100%', maxHeight: 800, display: 'flex', flexDirection: isMobile ? 'column' : 'row', borderRadius: { xs: 0, md: 4 }, overflowX: 'hidden', overflowY: 'auto', transition: 'background-color 0.5s ease', border: '1px solid rgba(255,255,255,0.4)' }}
       >
         {/* LEFT PANEL */}
         <Box sx={{ width: isMobile ? '100%' : '35%', display: 'flex', flexDirection: 'column', backgroundColor: '#ffffff' }}>
-          <Box sx={{ position: 'relative', height: isMobile ? 300 : '45%', overflow: 'hidden' }}>
+          <Box sx={{ position: 'relative', height: isMobile ? 300 : '45%', overflow: 'hidden', flexShrink: 0 }}>
             <Box component="img" src={activeTheme.image} alt="Theme Landscape" sx={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.7s ease', '&:hover': { transform: 'scale(1.08)' } }} />
             <Box sx={{ position: 'absolute', inset: 0, background: `linear-gradient(to top, ${activeTheme.mainColor} 0%, transparent 100%)`, opacity: 0.85, transition: 'background 0.5s ease' }} />
             <Box sx={{ position: 'absolute', bottom: 30, left: 30, color: 'white' }}>
@@ -130,11 +131,10 @@ export default function WallCalendar() {
         </Box>
 
         {/* RIGHT PANEL */}
-        <Box sx={{ width: isMobile ? '100%' : '65%', p: { xs: 3, md: 6, lg: 8 }, display: 'flex', flexDirection: 'column', backgroundColor: activeTheme.panelBg, transition: 'background-color 0.5s ease', overflow: 'hidden' }}>
+        {/* FIX 2: Changed overflow: 'hidden' to overflowX: 'hidden' */}
+        <Box sx={{ width: isMobile ? '100%' : '65%', p: { xs: 3, md: 6, lg: 8 }, display: 'flex', flexDirection: 'column', backgroundColor: activeTheme.panelBg, transition: 'background-color 0.5s ease', overflowX: 'hidden' }}>
           
-          {/* UPDATED HEADER: Responsive Flexbox & Scaling */}
           <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: { xs: 4, md: 6 }, width: '100%' }}>
-            {/* Left Buttons wrapped in a flex container */}
             <Box sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 } }}>
               <IconButton aria-label="Previous year" onClick={() => navigateYear(-1)} sx={{ bgcolor: 'white', color: activeTheme.mainColor, boxShadow: 1, p: { xs: 0.8, sm: 1 } }}>
                 <KeyboardDoubleArrowLeftIcon fontSize={isMobile ? "small" : "medium"} />
@@ -144,12 +144,10 @@ export default function WallCalendar() {
               </IconButton>
             </Box>
 
-            {/* Typography dynamically scales down on mobile to prevent squishing buttons */}
             <Typography aria-live="polite" sx={{ fontWeight: 800, color: activeTheme.mainColor, letterSpacing: -0.5, transition: 'color 0.5s ease', fontSize: { xs: '1.25rem', sm: '1.75rem', md: '2.125rem' }, textAlign: 'center', px: 1 }}>
               {currentDate.toLocaleString('default', { month: 'long', year: 'numeric' })}
             </Typography>
 
-            {/* Right Buttons wrapped in a flex container */}
             <Box sx={{ display: 'flex', gap: { xs: 0.5, sm: 1 } }}>
               <IconButton aria-label="Next month" onClick={() => navigateMonth(1)} sx={{ bgcolor: 'white', color: activeTheme.mainColor, boxShadow: 1, p: { xs: 0.8, sm: 1 } }}>
                 <ChevronRightIcon fontSize={isMobile ? "small" : "medium"} />
@@ -169,7 +167,8 @@ export default function WallCalendar() {
               ))}
             </Box>
 
-            <Box sx={{ flexGrow: 1, position: 'relative', overflow: 'hidden' }}>
+            {/* FIX 3: Changed overflow: 'hidden' to overflowX: 'hidden' */}
+            <Box sx={{ flexGrow: 1, position: 'relative', overflowX: 'hidden' }}>
               <AnimatePresence initial={false} custom={direction} mode="popLayout">
                 <motion.div
                   key={currentDate.getTime()}
