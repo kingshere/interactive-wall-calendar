@@ -90,9 +90,22 @@ export default function WallCalendar() {
       <Box sx={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(255, 255, 255, 0.55)', zIndex: -1 }} />
 
       {/* FIX 1: Changed overflow: 'hidden' to overflowX: 'hidden' and overflowY: 'auto' so the whole card can scroll vertically on mobile */}
-      <Paper 
+     <Paper 
         elevation={24} 
-        sx={{ width: '100%', maxWidth: 1200, height: '100%', maxHeight: 800, display: 'flex', flexDirection: isMobile ? 'column' : 'row', borderRadius: { xs: 0, md: 4 }, overflowX: 'hidden', overflowY: 'auto', transition: 'background-color 0.5s ease', border: '1px solid rgba(255,255,255,0.4)' }}
+        sx={{ 
+          width: '100%', 
+          maxWidth: 1200, 
+          height: '100%', 
+          maxHeight: 800, 
+          display: 'flex', 
+          flexDirection: isMobile ? 'column' : 'row', 
+          borderRadius: { xs: 0, md: 4 }, 
+          overflowX: 'hidden', 
+          // THE MAGIC FIX: Auto on mobile, strictly hidden on desktop
+          overflowY: { xs: 'auto', md: 'hidden' }, 
+          transition: 'background-color 0.5s ease', 
+          border: '1px solid rgba(255,255,255,0.4)' 
+        }}
       >
         {/* LEFT PANEL */}
         <Box sx={{ width: isMobile ? '100%' : '35%', display: 'flex', flexDirection: 'column', backgroundColor: '#ffffff' }}>
