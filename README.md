@@ -7,7 +7,7 @@
 
 > A premium, production-ready React calendar component featuring dynamic Glassmorphism theming, fluid animations, and enterprise-grade accessibility.
 
-**[🔴 Live Demo](https://your-live-link-here.vercel.app) | [🎥 Video Walkthrough](https://your-loom-link-here.com)**
+**[🔴 Live Demo](https://interactive-wall-calendar-blush.vercel.app/) | [🎥 Video Walkthrough](https://drive.google.com/file/d/1JR3IrybWBxbSQZ-MeepWfkyjAQiE33nx/view?usp=drive_link)**
 
 ---
 
